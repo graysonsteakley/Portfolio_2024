@@ -4,15 +4,15 @@ import Toast, { ToastType } from "../toasts/Toast";
 export default function ContactForm() {
   const [responseMessage, setResponseMessage] = useState("");
 
-  const onCancel = () => {
+  const onCancel = (timer = 0) => {
     const modal = document.getElementById(
-      "my_modal_1",
+      "contact_modal",
     ) as HTMLDialogElement | null;
 
     setTimeout(() => {
       setResponseMessage("");
       modal?.close?.();
-    }, 500);
+    }, timer);
   };
 
   async function submit(e: FormEvent<HTMLFormElement>) {
@@ -26,7 +26,7 @@ export default function ContactForm() {
     if (data.message) {
       setResponseMessage(data.message);
       (e.target as HTMLFormElement).reset();
-      onCancel();
+      onCancel(500);
     }
   }
 
@@ -77,7 +77,7 @@ export default function ContactForm() {
             <button type="submit" className="btn btn-primary">
               Send Message
             </button>
-            <button className="btn" type="button" onClick={onCancel}>
+            <button className="btn" type="button" onClick={() => onCancel()}>
               Close
             </button>
           </div>
