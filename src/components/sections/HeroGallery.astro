@@ -1,0 +1,105 @@
+---
+import ContactMeButton from "../buttons/ContactMeButton.astro";
+import LightButton from "../buttons/LightButton.astro";
+---
+
+<section class="w-full px-4 py-12 md:py-24 lg:py-32 xl:py-40">
+  <div class="space-y-10 xl:space-y-16">
+    <div class="grid max-w-[1300px] mx-auto gap-4 md:grid-cols-2 md:gap-6">
+      <div class="flex flex-col justify-center space-y-6">
+        <div class="space-y-4">
+          <h1 class="max-w-[600px] text-gray-500 text-4xl dark:text-gray-200">
+            Grayson Steakley
+          </h1>
+          <h2 class="max-w-[600px] text-gray-500 text-2xl dark:text-gray-200">
+            Full Stack Developer
+          </h2>
+          <p class="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+            I bring scalable UI and Architechtual solutions into reality for
+            enterprises, agencies, and private-clients.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <LightButton>Explore My Work</LightButton>
+          <ContactMeButton />
+        </div>
+      </div>
+      <div class="relative self-end grid gap-2 shadow-amber-900 shadow-2xl">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="col-span-2 gap-2 flex">
+            <img
+              class="h-44 object-cover w-1/2 max-w-full rounded-lg"
+              src="/cisco.jpeg"
+              alt=""
+            />
+            <div
+              class="flex flex-col gap-2 h-44 items-center justify-center w-full"
+            >
+              <img
+                class="object-contain h-1/3 object-top max-w-full rounded-lg"
+                src="/radian.png"
+                alt=""
+              />
+              <img
+                class="object-contain h-2/3 max-h-44 object-top max-w-full rounded-lg"
+                src="/shuup.png"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-span-2">
+            <img
+              class="h-44 object-cover max-w-full rounded-lg"
+              src="/hg-search.png"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="col-span-2 gap-2 flex flex-col">
+            <img
+              class="h-36 object-cover max-w-full rounded-lg"
+              src="/canvas.png"
+              alt=""
+            />
+            <img
+              class="h-36 object-cover object-top max-w-full rounded-lg"
+              src="/realtyonegroup.png"
+              alt=""
+            />
+          </div>
+          <div class="col-span-2 gap-2 flex flex-col">
+            <img
+              class="h-36 object-cover object-top max-w-full rounded-lg"
+              src="/bookelevent.png"
+              alt=""
+            />
+            <div class="flex gap-2 w-44">
+              <img
+                class="h-36 object-cover object-bottom max-w-full rounded-lg"
+                src="/trends-mobile.png"
+                alt=""
+              />
+              <img
+                class="h-36 object-bottom max-w-full rounded-lg"
+                src="/market-info.png"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-span-1 gap-2 flex flex-col">
+            <div
+              class="flex flex-col gap-4 self-end items-end justify-end h-full"
+            >
+              <img
+                class="h-auto object-cover max-w-full rounded-lg"
+                src="/details-mobile.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
