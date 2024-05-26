@@ -24,6 +24,7 @@ export default function ContactForm() {
     const data = await response.json();
     if (data.message) {
       setResponseMessage(data.message);
+      (e.target as HTMLFormElement).reset();
       onCancel();
     }
   }
