@@ -1,0 +1,70 @@
+---
+import GithubIcon from "./icons/GithubIcon.astro";
+import LinkedinIcon from "./icons/LinkedinIcon.astro";
+import LogoIcon from "./icons/LogoIcon.astro";
+
+const today = new Date();
+---
+
+<footer
+  class="footer p-10 bg-neutral text-neutral-content flex justify-around items-start
+  max-md:flex-col max-md:gap-6
+  max-sm:p-6 max-sm:gap-4"
+>
+  <aside class="max-md:self-center
+  max-sm:self-start">
+    <LogoIcon classes="max-md:hidden" />
+    <p>&copy; {today.getFullYear()} Grayson Steakley, All rights reserved.</p>
+  </aside>
+  <div
+    class="flex justify-center flex-grow gap-4
+   max-md:w-full
+   max-sm:flex-col max-sm:items-start max-sm:justify-start"
+  >
+    <nav class="ml-auto
+    max-sm:ml-0">
+      <h6 class="footer-title">Social</h6>
+      <div class="flex space-x-4 self-end
+      max-sm:self-start">
+        <a
+          href="https://www.linkedin.com/in/grayson-steakley-2aa9a0138/"
+          target="_blank"
+          aria-label="LinkedIn"
+          class="btn btn-circle btn-primary"
+        >
+          <LinkedinIcon />
+        </a>
+        <a
+          href="https://github.com/graysonsteakley"
+          aria-label="GitHub Grayson Steakley"
+          target="_blank"
+          class="btn btn-circle btn-primary"
+        >
+          <GithubIcon />
+        </a>
+      </div>
+    </nav>
+
+    <form
+      action="/subscribe"
+      method="POST"
+      class="self-end ml-auto
+      max-sm:ml-0 max-sm:self-start"
+    >
+      <h6 class="footer-title">Newsletter</h6>
+      <fieldset class="form-control w-80">
+        <label class="label p-0 pb-2 max-sm:hidden">
+          <span class="label-text">Enter your email address</span>
+        </label>
+        <div class="join">
+          <input
+            type="text"
+            placeholder="email@example.com"
+            class="input border-r-0 join-item w-max"
+          />
+          <button class="btn btn-primary join-item">Subscribe</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</footer>
