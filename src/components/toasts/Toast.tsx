@@ -57,10 +57,7 @@ const Toast = ({ children, type = ToastType.SUCCESS }: ToastProps) => {
 
   return (
     loaded && (
-      <div
-        className="toast toast-top toast-end top-0 right-2"
-        style={{ position: "fixed", zIndex: 10000 }}
-      >
+      <div className="toast toast-top toast-end top-0 right-2">
         <div className={classes}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
