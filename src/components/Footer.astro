@@ -49,16 +49,16 @@ const today = new Date();
       <form
         action="/subscribe"
         method="POST"
-        class="self-end ml-auto
-      max-sm:ml-0 max-sm:self-start"
+        class="self-end ml-auto max-sm:ml-0 max-sm:self-start"
       >
         <h6 class="footer-title">Newsletter</h6>
         <fieldset class="form-control w-80">
-          <label class="label p-0 pb-2 max-sm:hidden">
+          <label for="email" class="label p-0 pb-2 max-sm:hidden">
             <span class="label-text">Enter your email address</span>
           </label>
           <div class="join rounded-none">
             <input
+              id="email"
               type="text"
               placeholder="email@example.com"
               class="input border-r-0 join-item w-max"
