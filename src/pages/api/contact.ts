@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
 
+// IF A ROUTE SHOULD BE SSR NOT SSG
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request }) => {
-  console.log("?????");
   const data = await request.formData();
 
   console.log("data, ", data);
