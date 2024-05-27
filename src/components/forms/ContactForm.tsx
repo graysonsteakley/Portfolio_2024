@@ -42,7 +42,7 @@ export default function ContactForm() {
             name="name"
             type="text"
             placeholder="John Doe"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full rounded-none"
             required
           />
         </div>
@@ -56,7 +56,7 @@ export default function ContactForm() {
             type="email"
             autoComplete="email"
             placeholder="email@example.com"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full rounded-none"
             required
           />
         </div>
@@ -68,16 +68,20 @@ export default function ContactForm() {
             id="message"
             name="message"
             placeholder="Your message..."
-            className="textarea textarea-bordered w-full"
+            className="textarea textarea-bordered w-full rounded-none"
             required
           ></textarea>
         </div>
         <div className="modal-action flex flex-col items-end">
           <div className="flex gap-2">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary rounded-none">
               Send Message
             </button>
-            <button className="btn" type="button" onClick={() => onCancel()}>
+            <button
+              className="btn rounded-none"
+              type="button"
+              onClick={() => onCancel()}
+            >
               Close
             </button>
           </div>
