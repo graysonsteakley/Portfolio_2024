@@ -1,6 +1,6 @@
 ---
-title: "Second post"
-description: "Lorem ipsum dolor sit amet"
+title: "Converting images jpeg/png to webp with cwebp"
+description: "Converting images jpeg/png to webp with cwebp"
 pubDate: "May 27 2024"
 heroImage: "/blog-placeholder-4.jpg"
 ---
@@ -28,8 +28,9 @@ First, you need to install the WebP tools on your machine. If you're using macOS
 ```bash
 brew install webp
 The Bash Script
-Here's a simple bash script that converts all JPEG and PNG images in a specified directory to WebP format and then deletes the original files.
 ```
+
+Here's a simple bash script that converts all JPEG and PNG images in a specified directory to WebP format and then deletes the original files.
 
 ```bash
 Copy code
