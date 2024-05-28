@@ -1,16 +1,96 @@
 ---
 title: "Second post"
 description: "Lorem ipsum dolor sit amet"
-pubDate: "Jul 15 2022"
+pubDate: "May 27 2024"
 heroImage: "/blog-placeholder-4.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+# Optimizing Images for the Web with WebP and a Simple Bash Script
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+In today's web development landscape, optimizing images is crucial for improving site performance and enhancing user experience. One of the best ways to optimize images is by converting them to the WebP format. WebP is a modern image format that provides superior compression and quality compared to traditional formats like JPEG and PNG.
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+In this post, I'll walk you through the process of converting images to WebP format using a simple bash script. This script will not only convert your images but also delete the original files to save space.
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+I implemented this today converting my portfolio images to webp format.
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+## Why WebP?
+
+WebP offers several advantages:
+
+- **Smaller file sizes**: WebP images are typically 25-34% smaller than comparable JPEG images.
+- **Lossless and lossy compression**: WebP supports both lossless and lossy compression, giving you flexibility based on your needs.
+- **Transparency and animation**: WebP supports transparency (like PNG) and animation (like GIF).
+
+## Installing the WebP Tool
+
+First, you need to install the WebP tools on your machine. If you're using macOS, you can easily install them using Homebrew.
+
+```bash
+brew install webp
+The Bash Script
+Here's a simple bash script that converts all JPEG and PNG images in a specified directory to WebP format and then deletes the original files.
+```
+
+```bash
+Copy code
+#!/bin/bash
+
+# Directory containing images
+DIR="./images"
+
+# Output directory for WebP images
+OUTPUT_DIR="./webp_images"
+
+# Create the output directory if it doesn't exist
+mkdir -p $OUTPUT_DIR
+
+# Loop through all image files in the directory
+for img in "$DIR"/*.{jpg,jpeg,png}; do
+  if [[ -f $img ]]; then
+    # Get the filename without extension
+    filename=$(basename "$img")
+    filename="${filename%.*}"
+
+    # Convert the image to WebP format
+    cwebp -q 80 "$img" -o "$OUTPUT_DIR/$filename.webp"
+
+    if [[ $? -eq 0 ]]; then
+      # Delete the original image if the conversion was successful
+      rm "$img"
+      echo "Converted and deleted $img"
+    else
+      echo "Failed to convert $img"
+    fi
+  fi
+done
+
+echo "All images have been converted to WebP format and original files deleted."
+```
+
+How the Script Works
+Set the directories: The script defines the directory containing the original images (DIR) and the directory where the converted WebP images will be saved (OUTPUT_DIR).
+
+Create the output directory: If the output directory does not exist, it will be created.
+
+Loop through images: The script loops through all JPEG and PNG files in the input directory.
+
+Convert images: Each image is converted to WebP format with a quality setting of 80. You can adjust the quality setting based on your requirements.
+
+Delete original images: If the conversion is successful, the original image file is deleted.
+
+Running the Script
+Save the script as convert_to_webp.sh.
+Make the script executable:
+
+```bash
+chmod +x convert_to_webp.sh
+Run the script:
+./convert_to_webp.sh
+```
+
+That's it! Your images will be converted to WebP format, and the original files will be deleted, leaving you with optimized images ready for the web.
+
+Conclusion
+Optimizing images is an essential part of web development, and converting them to WebP format is a great way to achieve this. With the simple bash script provided, you can automate the process and ensure your images are web-friendly. Give it a try and see the difference in your website's performance!
+
+Feel free to share your thoughts or ask questions in the comments below. Happy optimizing!
