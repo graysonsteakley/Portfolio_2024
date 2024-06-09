@@ -39,25 +39,26 @@ export default function ContactForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        setResponse({ message: data.message, type: ToastType.SUCCESS });
+        setResponse({ message: data?.message, type: ToastType.SUCCESS });
         setErrors({});
         (e.target as HTMLFormElement).reset();
         onCancel(500);
       } else {
         setResponse({
-          message: data.message || "An error occurred. Please try again.",
+          message: data?.message || "An error occurred. Please try again.",
           type: ToastType.ERROR,
         });
-        if (data.errors) {
+        if (data?.errors) {
           const validationErrors: ValidationError = {};
-          data.errors.forEach((err: { field: string; message: string }) => {
-            validationErrors[err.field as keyof ContactSchema] = err.message;
-          });
+          for (const error of data.errors) {
+            validationErrors[error.field as keyof ContactSchema] =
+              error.message;
+          }
           setErrors(validationErrors);
         }
       }
     } catch (error) {
-      setResponse({
+    setResponse({
         message: "An error occurred. Please try again.",
         type: ToastType.ERROR,
       });

@@ -14,7 +14,6 @@ const contactSchema = z.object({
 
 export type ContactSchema = z.infer<typeof contactSchema>;
 
-// TODO: Move to ZOD for verification of inputs.
 export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
 
@@ -51,7 +50,6 @@ export const POST: APIRoute = async ({ request }) => {
     },
   });
 
-  // Send the email
   try {
     await transporter.sendMail(mailOptions);
     return new Response(
