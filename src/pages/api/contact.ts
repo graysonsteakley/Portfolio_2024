@@ -1,20 +1,31 @@
 import type { APIRoute } from "astro";
 import nodemailer from "nodemailer";
 import type { Address } from "nodemailer/lib/mailer";
+import { z } from "zod";
 
 // IF A ROUTE SHOULD BE SSR NOT SSG
 export const prerender = false;
 
+const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(1, "Message is required"),
+});
+
+// TODO: Move to ZOD for verification of inputs.
 export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
 
   const name = data.get("name");
   const email = data.get("email");
   const message = data.get("message");
-  if (!name || !email || !message) {
+
+  const validation = contactSchema.safeParse({ name, email, message });
+  if (!validation.success) {
     return new Response(
       JSON.stringify({
-        message: "Missing required fields",
+        message: "Validation failed",
+        errors: validation.error.errors,
       }),
       { status: 400 },
     );

@@ -2,15 +2,21 @@ import { type FormEvent, useState } from "react";
 import Toast, { ToastType } from "../toasts/Toast";
 
 export default function ContactForm() {
-  const [responseMessage, setResponseMessage] = useState("");
+  const [response, setResponse] = useState<{
+    message: string;
+    type: ToastType | null;
+  }>({
+    message: "",
+    type: null,
+  });
 
-  const onCancel = (timer = 0) => {
+  const onCancel = (timer: number = 0) => {
     const modal = document.getElementById(
       "contact_modal",
     ) as HTMLDialogElement | null;
 
     setTimeout(() => {
-      setResponseMessage("");
+      setResponse({ message: "", type: null });
       modal?.close?.();
     }, timer);
   };
@@ -18,15 +24,28 @@ export default function ContactForm() {
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    if (data.message) {
-      setResponseMessage(data.message);
-      (e.target as HTMLFormElement).reset();
-      onCancel(500);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setResponse({ message: data.message, type: ToastType.SUCCESS });
+        (e.target as HTMLFormElement).reset();
+        onCancel(500);
+      } else {
+        setResponse({
+          message: data.message || "An error occurred. Please try again.",
+          type: ToastType.ERROR,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      setResponse({
+        message: "An error occurred. Please try again.",
+        type: ToastType.ERROR,
+      });
     }
   }
 
@@ -87,8 +106,8 @@ export default function ContactForm() {
           </div>
         </div>
       </form>
-      {responseMessage && (
-        <Toast type={ToastType.SUCCESS}>{responseMessage}</Toast>
+      {response.message && (
+        <Toast type={response.type as ToastType}>{response.message}</Toast>
       )}
     </>
   );
