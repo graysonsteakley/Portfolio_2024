@@ -1,5 +1,11 @@
 import { type FormEvent, useState } from "react";
 import Toast, { ToastType } from "../toasts/Toast";
+import type { ContactSchema } from "../../pages/api/contact";
+import { ErrorText } from "./ErrorText";
+
+type ValidationError = {
+  [K in keyof ContactSchema]?: string;
+};
 
 export default function ContactForm() {
   const [response, setResponse] = useState<{
@@ -9,14 +15,16 @@ export default function ContactForm() {
     message: "",
     type: null,
   });
+  const [errors, setErrors] = useState<ValidationError>({});
 
-  const onCancel = (timer: number = 0) => {
+  const onCancel = (timer = 0) => {
     const modal = document.getElementById(
       "contact_modal",
     ) as HTMLDialogElement | null;
 
     setTimeout(() => {
       setResponse({ message: "", type: null });
+      setErrors({});
       modal?.close?.();
     }, timer);
   };
@@ -32,6 +40,7 @@ export default function ContactForm() {
       const data = await response.json();
       if (response.ok) {
         setResponse({ message: data.message, type: ToastType.SUCCESS });
+        setErrors({});
         (e.target as HTMLFormElement).reset();
         onCancel(500);
       } else {
@@ -39,9 +48,15 @@ export default function ContactForm() {
           message: data.message || "An error occurred. Please try again.",
           type: ToastType.ERROR,
         });
+        if (data.errors) {
+          const validationErrors: ValidationError = {};
+          data.errors.forEach((err: { field: string; message: string }) => {
+            validationErrors[err.field as keyof ContactSchema] = err.message;
+          });
+          setErrors(validationErrors);
+        }
       }
     } catch (error) {
-      console.error(error);
       setResponse({
         message: "An error occurred. Please try again.",
         type: ToastType.ERROR,
@@ -64,6 +79,7 @@ export default function ContactForm() {
             className="input input-bordered w-full rounded-none"
             required
           />
+          <ErrorText error={errors?.name} />
         </div>
         <div className="form-control">
           <label htmlFor="email" className="label">
@@ -78,6 +94,7 @@ export default function ContactForm() {
             className="input input-bordered w-full rounded-none"
             required
           />
+          <ErrorText error={errors?.email} />
         </div>
         <div className="form-control">
           <label htmlFor="message" className="label">
@@ -89,7 +106,8 @@ export default function ContactForm() {
             placeholder="Your message..."
             className="textarea textarea-bordered w-full rounded-none"
             required
-          ></textarea>
+          />
+          <ErrorText error={errors?.message} />
         </div>
         <div className="modal-action flex flex-col items-end">
           <div className="flex gap-2">
@@ -106,7 +124,7 @@ export default function ContactForm() {
           </div>
         </div>
       </form>
-      {response.message && (
+      {response?.message && (
         <Toast type={response.type as ToastType}>{response.message}</Toast>
       )}
     </>

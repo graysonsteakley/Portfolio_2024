@@ -12,6 +12,8 @@ const contactSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
 
+export type ContactSchema = z.infer<typeof contactSchema>;
+
 // TODO: Move to ZOD for verification of inputs.
 export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
